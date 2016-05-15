@@ -61,12 +61,16 @@ var App=React.createClass({
     });
 		
     this.setState({ 
-    	notes: notes,
-    	noteEdit: {
-    		data: ''
-    	}
+    	notes: notes
+    }, function(){
+	    	this.setState({
+	    		noteEdit:{
+	    			id: note.id,
+	    			action: 'DELETE'
+	    		}
+	    	});
     });
-  	
+
 	},
 	
 	onAdd: function(note){

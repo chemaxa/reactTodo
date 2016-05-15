@@ -6,6 +6,9 @@ var utils={
 			MM='0'+MM;
 		}
 		let DD = (new Date(dateStr)).getDate();
+		if(DD<10){
+			DD='0'+DD;
+		}
 		return {
 			YYYY: YYYY,
 			MM: MM,

@@ -4,6 +4,7 @@ var NoteForm = React.createClass({
 	getInitialState: function () {
 		return this.props.noteEdit.data;
 	},
+
 	noteChange: function (e) {
 		this.setState({
 			id : this.state.id || '',
@@ -15,9 +16,15 @@ var NoteForm = React.createClass({
 	},
 
 	componentWillReceiveProps: function(nextProps) {
+		console.log(nextProps.noteEdit)
+		if(nextProps.noteEdit.action=="DELETE"){
+			this.clearForm()
+			return
+		}
 		let {date,id,text,completed,name} = nextProps.noteEdit.data;
 		let {YYYY,MM,DD}=utils.convertDate(date);
   	this.setState({date:`${YYYY}-${MM}-${DD}`,id,text,completed,name});
+
 	},
 
 	onSubmit: function (e) {
@@ -45,7 +52,6 @@ var NoteForm = React.createClass({
 		})
 	},
 	render: function(){
-		console.log(this.props.noteEdit);
 		return(
 			<form onSubmit={this.onSubmit}>
 				<input type="hidden" name="id" value={this.state.id}/>
