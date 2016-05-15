@@ -17,7 +17,7 @@ var App=React.createClass({
 					text: '',
 					completed: false
 				},
-				action: ''
+				action: 'CREATE'
 			} 
 		};
 	},
