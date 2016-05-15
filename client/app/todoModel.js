@@ -12,6 +12,13 @@ const todoModel = (function() {
         description: 'Lets go controller with Angular',
         date: new Date(2015, 1, 1, 0, 0, 0, 0),
         completed: false
+    },
+    {
+        id: 4,
+        name: 'Fourth Todo',
+        description: 'Lets go controller with Angular',
+        date: new Date(2015, 1, 1, 0, 0, 0, 0),
+        completed: false
     }, {
         id: 3,
         name: 'Third Todo',
@@ -24,11 +31,10 @@ const todoModel = (function() {
         return todoList[id];
     }
 
-    
     return {
         todoList: todoList,
         getTodo: getTodo
     };
 })();
 
-export {todoModel};
+export default todoModel;

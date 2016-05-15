@@ -1,13 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import todoModel from './todoModel';
-console.log(todoModel);
-const todoList = () => { 
-	<ul class = "list-group">
 
-    </ul>
-}
-
+console.log(todoModel.todoList)
 class TestInput extends React.Component{
 	
   onBtnClickHandler(){
@@ -47,4 +42,4 @@ class App extends React.Component{
 }
   
 
-ReactDOM.render( <App/> , document.getElementById('App'));
+export default App

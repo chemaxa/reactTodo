@@ -1,28 +1,30 @@
 'use strict';
 let path = require('path');
 let webpack = require('webpack');
-let dirName = path.resolve(__dirname,'./client/app');
-console.log('DN: ',dirName);
+
 module.exports = {
-  entry: './client/app/app.js',
+  devtool: 'eval',
+  entry: [
+    'webpack-dev-server/client?http://localhost:3001',
+    'webpack/hot/only-dev-server',
+    './client/app/index'
+  ],
   output: { 
-		path: dirName,
-		filename: 'bundle.js',
-		sourceMapFilename: '[file].map'
+    path: __dirname,
+    filename: 'bundle.js',
+    publicPath: '/'
 	},
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loaders: ['react-hot','babel'],
         exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react']
-        }
+        include: path.join(__dirname, '/client/app')
       }
     ]
   },
-	devServer:{
-		contentBase: __dirname+'/client/'
-	}
 };
