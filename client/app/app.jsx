@@ -1,28 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import todoModel from './todomodel';
+import noteModel from './notemodel';
 import NoteForm from './noteform';
 import NotesList from './noteslist';
 
 var App=React.createClass({
 	getInitialState: function(){
 		return {
-			notes:[
-				{
-					id: Date.now().toString(),
-					name: 'Todo 1',
-					date: "2016-05-14",
-					text: 'Some text',
-					completed: false
-				},
-				{
-					id: (Date.now()+1).toString(),
-					name: 'Todo 2',
-					date: "2016-03-12",
-					text: 'Other text',
-					completed: false
-				},
-			],
+			notes:noteModel.noteList,
 			noteEdit:{
 				id: '',
 				data: {

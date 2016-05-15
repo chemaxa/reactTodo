@@ -1,5 +1,5 @@
 import Note from './note'
-import React from 'react';
+import React from 'react'
 var NotesList = React.createClass({
 	render: function(){
 		let onNoteDelete = this.props.onDelete,
