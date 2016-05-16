@@ -71,16 +71,16 @@ class NoteForm extends Component{
 				<div className="panel-body">
 					<input type="hidden" name="id" value={id}/>
 					<div className="form-group">
-						<label>Имя</label>
+						<label>Name</label>
 					  	<input type="text" required value={name} onChange={this.noteChange} name="name" className="form-control" placeholder="Имя"/>
 					  	
 					</div>
 					<div className="form-group">
-						<label>Дата</label>
+						<label>Date</label>
 					  	<input type="date" required value={date} onChange={this.noteChange} name="date" className="form-control" placeholder="Дата"/>
 					</div>
 					<div className="form-group">
-						<label>Текст</label>
+						<label>Description</label>
 							<textarea cols="30" rows="10" required value={text} onChange={this.noteChange} name="text" className="form-control" placeholder="Описание" />
 					</div>
 					<div className="checkbox">

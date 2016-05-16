@@ -38,12 +38,9 @@ class Controls extends Component{
 						</button>
 						
 					</div>
-					<form className="input-group panel-body" onSubmit={this.onSubmit}>
+					<div className="form-group panel-body" >
 				      <input type="text" value={this.props.term} onChange={this.props.onSearch} className="form-control" placeholder="Search for..."/>
-				      <span className="input-group-btn">
-				        <button className="btn btn-default" type="submit">Go!</button>
-				      </span>
-				  </form>
+				  </div>
 				</div>
 			)
 	}
