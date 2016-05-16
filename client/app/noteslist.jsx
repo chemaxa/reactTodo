@@ -1,18 +1,21 @@
 import Note from './note'
 import React, {Component} from 'react'
 
-
 class NotesList extends Component{
 	render(){
 		let onNoteDelete = this.props.onDelete,
 		 		onNoteEdit = this.props.onEdit,
 		 		noteEdit = this.props.noteEdit,
-		 		setCompleted = this.props.setCompleted,
-		 		sorting=this.props.sorting;
+		 		notes=this.props.notes,
+		 		setCompleted = this.props.setCompleted;
+		if(!notes.length){
+			return(
+				<h3>Nothing found :(</h3>
+			)
+		}
 		return (
-			<div className="panel">
 				<div className="list-group">
-					{this.props.notes.map(function(note){
+					{notes.map(function(note){
 						return (<Note 
 										key={note.id} 
 										note={note}
@@ -22,16 +25,7 @@ class NotesList extends Component{
 										onEdit={onNoteEdit.bind(null,note)}
 						/>)
 					})}
-				  
 				</div>
-				<div className="panel panel-default">
-					<div className="panel-body">
-						<button type="button" className="btn btn-info" onClick={()=>sorting('name')}>Sort by Name</button>
-						&nbsp;
-						<button type="button" className="btn btn-info" onClick={()=>sorting('date')}>Sort by Date</button>
-					</div>
-				</div>
-			</div>
 		)
 	}
 }
