@@ -2,26 +2,26 @@ const noteModel = (function() {
 		
 		let noteList = [{
 				id: 2,
-				name: 'First Todo',
+				name: 'b',
 				text: 'Start with React',
 				date: '2016-03-14',
 				completed: true
 		}, {
 				id: 1,
-				name: 'Second Todo',
+				name: 'a',
 				text: 'Lets go controller with React',
 				date: '2015-10-04',
 				completed: false
 		},
 		{
 				id: 4,
-				name: 'Fourth Todo',
+				name: 'd',
 				text: 'Lets go controller with React',
 				date: '2016-08-24',
 				completed: false
 		}, {
 				id: 3,
-				name: 'Third Todo',
+				name: 'c',
 				text: 'Testing with React',
 				date: '2016-08-04',
 				completed: true

@@ -5,25 +5,31 @@ class NoteForm extends Component{
 	constructor (props) {
 		super(props);
 		this.state = this.props.noteEdit;
+		this.noteChange=this.noteChange.bind(this);
+		this.componentWillReceiveProps=this.componentWillReceiveProps.bind(this);
+		this.onSubmit=this.onSubmit.bind(this);
+		
+		this.clearForm=this.clearForm.bind(this);
+		this.render=this.render.bind(this);
+		
 	}
 
 	noteChange(e) {
+		let self = this;
 		this.setState({
-			noteEdit:{
 				data:{
 					id : this.state.data.id || '',
-					name : e.target.name == 'name' ? e.target.value : this.state.data.name,
+					name : e.target.name == 'name' ? e.target.value : self.state.data.name,
 					date :e.target.name == 'date' ? e.target.value : this.state.data.date,
 					text :e.target.name == 'text' ? e.target.value : this.state.data.text,
 					completed :e.target.name == 'completed' ? e.target.checked : this.state.data.completed
 				}
-			}
-		}
-		);
+		});
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(nextProps.noteEdit.action=='DELETE'){
+		console.log(nextProps)
+		if(nextProps.noteEdit.action=="DELETE"){
 			this.clearForm()
 			return
 		}
@@ -69,35 +75,32 @@ class NoteForm extends Component{
 			action: 'CREATE'
 		})
 	}
-	stateButtonName () {
-		if(this.state.action==='CREATE')
-			return 'Create'
-		if(this.state.action==='EDIT')
-			return 'Update'
-	}
+	
 	render(){
+
+		let {id,name,text,date,completed,action} = this.state.data;
 		return(
 			<form onSubmit={this.onSubmit}>
-				<input type="hidden" name="id" value={this.state.data.id}/>
+				<input type="hidden" name="id" value={id}/>
 				<div className="form-group">
 					<label>Имя</label>
-				  	<input type="text" required value={this.state.data.name} onChange={this.noteChange} name="name" className="form-control" placeholder="Имя"/>
+				  	<input type="text" required value={name} onChange={this.noteChange} name="name" className="form-control" placeholder="Имя"/>
 				  	
 				</div>
 				<div className="form-group">
 					<label>Дата</label>
-				  	<input type="date" required value={this.state.data.date} onChange={this.noteChange} name="date" className="form-control" placeholder="Дата"/>
+				  	<input type="date" required value={date} onChange={this.noteChange} name="date" className="form-control" placeholder="Дата"/>
 				</div>
 				<div className="form-group">
 					<label>Текст</label>
-						<textarea cols="30" rows="10" required value={this.state.data.text} onChange={this.noteChange} name="text" className="form-control" placeholder="Описание" />
+						<textarea cols="30" rows="10" required value={text} onChange={this.noteChange} name="text" className="form-control" placeholder="Описание" />
 				</div>
 				<div className="checkbox">
 			    <label>
-			      <input type="checkbox" checked={this.state.data.completed} onChange={this.noteChange} name="completed"/> Completed
+			      <input type="checkbox" checked={completed} onChange={this.noteChange} name="completed"/> Completed
 			    </label>
 			  </div>
-					<button type="submit" className="btn btn-primary">{this.stateButtonName()}</button>&nbsp;
+					<button type="submit" className="btn btn-primary">{action==='CREATE' ? 'Create' : 'Update' }</button>&nbsp;
 					<button type="reset" onClick={this.clearForm} className="btn btn-warning">Reset form</button>
 			</form>
 		)

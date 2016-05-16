@@ -31,18 +31,22 @@ class App extends Component{
 		this.onUpdate=this.onUpdate.bind(this);
 		this.onDelete=this.onDelete.bind(this);
 		this.onAdd=this.onAdd.bind(this);
+		this.render=this.render.bind(this);
 	}
 
 	sorting (param){
 		console.log(param);
 		let notes = this.state.notes.slice();
+
 		notes.sort((item1, item2)=>{
-			console.log(item1,item2)
+			console.log(item1[param],item2[param])
 			if(item1[param]===item2[param]) return 0;
 			return item1[param]>item2[param] ? 1 : -1;
 		});
-		console.log('Initial: ',this.state.notes)
-		console.log('Sorted: ',notes)
+		console.log('Initial: ');
+		this.state.notes.forEach((item)=>console.log(item));
+		console.log('Sorted: ');
+		notes.forEach((item)=>console.log(item));
 		/*this.state({
 			sorting: {
 				isSorted: !isSorted,
@@ -72,6 +76,7 @@ class App extends Component{
 				action: 'EDIT'
 			}
 		});
+
 	}
 
 	onUpdate(note){
@@ -81,7 +86,14 @@ class App extends Component{
 			}
 			return item;
 		});
-		this.setState({notes: notes})
+		this.setState({
+			notes: notes,
+			noteEdit:{
+	    	id: note.id,
+	    	data: note,
+	    	action: 'UPDATE'
+	    }
+	  });
 		console.log('Note Updated: ',note)
 	}
 	
@@ -91,15 +103,19 @@ class App extends Component{
     });
 		
     this.setState({ 
-    	notes: notes
-    }, function(){
+    	notes: notes,
+    },
+	    ()=>{
 	    	this.setState({
 	    		noteEdit:{
-	    			id: note.id,
-	    			action: 'DELETE'
-	    		}
-	    	});
-    });
+		    		id: note.id,
+		    		action: 'DELETE'
+		    	}
+		    })
+	    }
+    );
+
+     
 
 	}
 	
