@@ -8,10 +8,7 @@ class NoteForm extends Component{
 		this.noteChange=this.noteChange.bind(this);
 		this.componentWillReceiveProps=this.componentWillReceiveProps.bind(this);
 		this.onSubmit=this.onSubmit.bind(this);
-		
-		this.clearForm=this.clearForm.bind(this);
 		this.render=this.render.bind(this);
-		
 	}
 
 	noteChange(e) {
@@ -28,11 +25,7 @@ class NoteForm extends Component{
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps)
-		if(nextProps.noteEdit.action=="DELETE"){
-			this.clearForm()
-			return
-		}
+
 		let {date,id,text,completed,name} = nextProps.noteEdit.data;
 		
 		let {YYYY,MM,DD}=utils.convertDate(date);
@@ -43,8 +36,7 @@ class NoteForm extends Component{
 					text,
 					completed,
 					name
-				},
-				action: 'EDIT'
+				}
 		});
   }
 
@@ -57,51 +49,47 @@ class NoteForm extends Component{
 			text: e.target.elements.text.value,
 			completed: e.target.elements.completed.checked
 		}
-		if(note.id)
+		let isExist=this.props.notes.some((item)=>{
+			item.id==note.id
+		});
+		if(note.id && isExist)
 			this.props.onUpdate(note)
 		else
 			this.props.onAdd(note)
 	}
 
-	clearForm () {
-		this.setState({
-			data:{
-				id: '',
-				name: '',
-				date: '',
-				text: '',
-				completed: false	
-			},
-			action: 'CREATE'
-		})
-	}
 	
 	render(){
 
-		let {id,name,text,date,completed,action} = this.state.data;
+		let {id,name,text,date,completed} = this.state.data;
+		if(this.props.messages.isExist){
+			return (<div className="alert alert-danger" role="alert">{this.props.messages.isExist}</div>)
+		}
 		return(
-			<form onSubmit={this.onSubmit}>
-				<input type="hidden" name="id" value={id}/>
-				<div className="form-group">
-					<label>Имя</label>
-				  	<input type="text" required value={name} onChange={this.noteChange} name="name" className="form-control" placeholder="Имя"/>
-				  	
+			<form className="panel panel-default" onSubmit={this.onSubmit}>
+				<div className="panel-body">
+					<input type="hidden" name="id" value={id}/>
+					<div className="form-group">
+						<label>Имя</label>
+					  	<input type="text" required value={name} onChange={this.noteChange} name="name" className="form-control" placeholder="Имя"/>
+					  	
+					</div>
+					<div className="form-group">
+						<label>Дата</label>
+					  	<input type="date" required value={date} onChange={this.noteChange} name="date" className="form-control" placeholder="Дата"/>
+					</div>
+					<div className="form-group">
+						<label>Текст</label>
+							<textarea cols="30" rows="10" required value={text} onChange={this.noteChange} name="text" className="form-control" placeholder="Описание" />
+					</div>
+					<div className="checkbox">
+				    <label>
+				      <input type="checkbox" checked={completed} onChange={this.noteChange} name="completed"/> Completed
+				    </label>
+				  </div>
+						<button type="submit" className="btn btn-primary">{this.props.noteEdit.action==='CREATE' ? 'Create' : 'Update' }</button>&nbsp;
+						<button type="reset" onClick={this.props.clearForm} className="btn btn-warning">Reset form</button>
 				</div>
-				<div className="form-group">
-					<label>Дата</label>
-				  	<input type="date" required value={date} onChange={this.noteChange} name="date" className="form-control" placeholder="Дата"/>
-				</div>
-				<div className="form-group">
-					<label>Текст</label>
-						<textarea cols="30" rows="10" required value={text} onChange={this.noteChange} name="text" className="form-control" placeholder="Описание" />
-				</div>
-				<div className="checkbox">
-			    <label>
-			      <input type="checkbox" checked={completed} onChange={this.noteChange} name="completed"/> Completed
-			    </label>
-			  </div>
-					<button type="submit" className="btn btn-primary">{action==='CREATE' ? 'Create' : 'Update' }</button>&nbsp;
-					<button type="reset" onClick={this.clearForm} className="btn btn-warning">Reset form</button>
 			</form>
 		)
 	}
