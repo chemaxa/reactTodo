@@ -1,10 +1,10 @@
-import React from 'react';
-var Note=React.createClass({
-	setCompleted: function (e) {
+import React, {Component} from 'react';
+class Note extends Component{
+	setCompleted (e) {
 		e.stopPropagation();
 		this.props.setCompleted();
-	},
-	render: function(){
+	}
+	render(){
 		 	let {id, date,name,text,completed} = this.props.note;
 			let {id:editId} = this.props.noteEdit;
 			let itemClassDefault = "list-group-item";
@@ -25,6 +25,6 @@ var Note=React.createClass({
 			  </a>
 			)
 	}
-});
+}
 
 export default Note;

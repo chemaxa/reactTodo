@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import utils from './utils'
-var NoteForm = React.createClass({
-	getInitialState: function () {
-		return this.props.noteEdit;
-	},
 
-	noteChange: function (e) {
+class NoteForm extends Component{
+	constructor (props) {
+		super(props);
+		this.state = this.props.noteEdit;
+	}
+
+	noteChange(e) {
 		this.setState({
 			noteEdit:{
 				data:{
@@ -18,15 +20,15 @@ var NoteForm = React.createClass({
 			}
 		}
 		);
-	},
+	}
 
-	componentWillReceiveProps: function(nextProps) {
+	componentWillReceiveProps(nextProps) {
 		if(nextProps.noteEdit.action=='DELETE'){
 			this.clearForm()
 			return
 		}
 		let {date,id,text,completed,name} = nextProps.noteEdit.data;
-		console.log('CWLRP: ',nextProps.noteEdit);
+		
 		let {YYYY,MM,DD}=utils.convertDate(date);
   	this.setState({
 				data:{
@@ -38,9 +40,9 @@ var NoteForm = React.createClass({
 				},
 				action: 'EDIT'
 		});
-  },
+  }
 
-	onSubmit: function (e) {
+	onSubmit  (e) {
 		e.preventDefault();
 		let note={
 			id: e.target.elements.id.value,
@@ -53,9 +55,9 @@ var NoteForm = React.createClass({
 			this.props.onUpdate(note)
 		else
 			this.props.onAdd(note)
-	},
+	}
 
-	clearForm: function () {
+	clearForm () {
 		this.setState({
 			data:{
 				id: '',
@@ -66,15 +68,14 @@ var NoteForm = React.createClass({
 			},
 			action: 'CREATE'
 		})
-	},
-	stateButtonName:function () {
-		console.log(this.state)
+	}
+	stateButtonName () {
 		if(this.state.action==='CREATE')
 			return 'Create'
 		if(this.state.action==='EDIT')
 			return 'Update'
-	},
-	render: function(){
+	}
+	render(){
 		return(
 			<form onSubmit={this.onSubmit}>
 				<input type="hidden" name="id" value={this.state.data.id}/>
@@ -101,6 +102,6 @@ var NoteForm = React.createClass({
 			</form>
 		)
 	}
-});
+}
 
 export default NoteForm
