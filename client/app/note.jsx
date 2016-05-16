@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 class Note extends Component{
+
 	setCompleted (e) {
 		e.stopPropagation();
 		this.props.setCompleted();
@@ -21,7 +22,7 @@ class Note extends Component{
 		        <h4 className="list-group-item-heading">{name}</h4>
 		        <p className="list-group-item-text">{text}</p>
 		        <span className="label label-default">{date}</span>
-		        <button type="button" className="btn btn-success pull-right btn-xs" onClick={this.setCompleted}>Set {completed ? 'uncompleted' : 'completed'}</button>
+		        <button type="button" className="btn btn-success pull-right btn-xs" onClick={this.setCompleted.bind(this)}>Set {completed ? 'uncompleted' : 'completed'}</button>
 			  </a>
 			)
 	}
