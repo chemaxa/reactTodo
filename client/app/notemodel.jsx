@@ -14,13 +14,13 @@ const noteModel = (function() {
 				completed: false
 		},
 		{
-				id: 4,
+				id: 3,
 				name: 'duy',
 				text: 'Lets go controller with React',
 				date: '2016-03-24',
 				completed: false
 		}, {
-				id: 3,
+				id: 4,
 				name: 'cop',
 				text: 'Testing with React',
 				date: '2016-08-04',

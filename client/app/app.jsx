@@ -27,8 +27,10 @@ class App extends Component{
 				asc: false
 			},
 			term: '',
-			mesages: {}
+			messages: {}
+
 		};
+
 		this.onSort = this.onSort.bind(this);
 		this.setCompleted=this.setCompleted.bind(this);
 		this.onEdit=this.onEdit.bind(this);
@@ -38,6 +40,7 @@ class App extends Component{
 		this.render=this.render.bind(this);
 		this.clearForm=this.clearForm.bind(this);
 		this.onSearch=this.onSearch.bind(this);
+		this.closeAlert=this.closeAlert.bind(this);
 	}
 
 	onSort (param){
@@ -140,20 +143,31 @@ class App extends Component{
 	}
 	
 	onAdd (note){
-		note.id=Date.now().toString();
 		let notes = this.state.notes.slice();
+		note.id=Date.now().toString();
+
 		let isExist=notes.some((item)=>{
-			item.id==note.id
+			return item.id==note.id
 		});
+
 		if(isExist) {
-			this.setState({messages: {
-				isExist: 'This todo is already exist!'
-			}})	
+			this.setState({
+				messages:{
+					isExist: 'This todo is already exist!'
+				}
+			});
 			return
 		}
 		notes.push(note);
 		this.setState({notes: notes})
 		console.log('Note Added: ',note)
+		console.log('Notes',notes)
+	}
+
+	closeAlert(){
+		this.setState({
+			messages:{}
+		})
 	}
 
 	render(){
@@ -175,7 +189,8 @@ class App extends Component{
 							clearForm={this.clearForm}
 							noteEdit={this.state.noteEdit}
 							notes={this.state.notes}
-							messages={this.state.mesages}
+							messages={this.state.messages}
+							closeAlert={this.closeAlert}
 						/>
 					</div>
 					<div className="col-md-7">

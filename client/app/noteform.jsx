@@ -25,9 +25,7 @@ class NoteForm extends Component{
 	}
 
 	componentWillReceiveProps(nextProps) {
-
 		let {date,id,text,completed,name} = nextProps.noteEdit.data;
-		
 		let {YYYY,MM,DD}=utils.convertDate(date);
   	this.setState({
 				data:{
@@ -50,20 +48,23 @@ class NoteForm extends Component{
 			completed: e.target.elements.completed.checked
 		}
 		let isExist=this.props.notes.some((item)=>{
-			item.id==note.id
+			return item.id==note.id
 		});
 		if(note.id && isExist)
 			this.props.onUpdate(note)
 		else
 			this.props.onAdd(note)
 	}
-
-	
 	render(){
-
 		let {id,name,text,date,completed} = this.state.data;
 		if(this.props.messages.isExist){
-			return (<div className="alert alert-danger" role="alert">{this.props.messages.isExist}</div>)
+			return (
+				<div className="alert alert-danger" role="alert">
+					<button type="button" className="close" onClick={this.props.closeAlert} aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+					{this.props.messages.isExist}
+				</div>
+			)
 		}
 		return(
 			<form className="panel panel-default" onSubmit={this.onSubmit}>
