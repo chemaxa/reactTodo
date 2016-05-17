@@ -64,9 +64,7 @@ class App extends Component{
 		let term = e.target.value;
 		console.log(term)
 		let notes = this.initialData.slice();
-		let filter = notes.filter((item)=>{
-			return ~(item.name.toLowerCase().indexOf(term))
-		})
+		let filter = notes.filter(item=> ~(item.name.toLowerCase().indexOf(term)))
 		this.setState({
 			term: term,
 			notes: filter
@@ -130,9 +128,7 @@ class App extends Component{
 	}
 
 	onDelete(note){
-    let notes = this.state.notes.filter(function(item) {
-        return item.id !== note.id;
-    });
+    let notes = this.state.notes.filter(item=> item.id !== note.id);
 		
     this.setState({ 
     	notes: notes,
@@ -146,9 +142,7 @@ class App extends Component{
 		let notes = this.state.notes.slice();
 		note.id=Date.now().toString();
 
-		let isExist=notes.some((item)=>{
-			return item.id==note.id
-		});
+		let isExist=notes.some(item => item.id==note.id );
 
 		if(isExist) {
 			this.setState({

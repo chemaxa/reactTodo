@@ -27,13 +27,8 @@ const noteModel = (function() {
 				completed: true
 		}];
 
-		let getNote = function(id){
-				return noteList[id];
-		}
-
 		return {
-				noteList: noteList,
-				getNote: getNote
+				noteList: noteList
 		};
 })();
 
