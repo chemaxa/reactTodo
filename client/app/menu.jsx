@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Link } from 'react-router'
 class Menu extends Component{
 	render(){
-		console.log(this.props.location)
 		let {pathname} = this.props.location;
 		return(
 			<nav className="navbar navbar-default">
