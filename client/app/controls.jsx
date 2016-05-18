@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 
 class Controls extends Component{
+	onSearch(e){
+		this.props.onSearch(e.target.value)
+	}
 	getSortByNameClassName(){
 		if(this.props.sortState.param=='name'){
 			return this.props.sortState.asc ?  "glyphicon glyphicon-sort-by-alphabet-alt" : "glyphicon glyphicon-sort-by-alphabet"
@@ -39,7 +42,7 @@ class Controls extends Component{
 						
 					</div>
 					<div className="form-group panel-body" >
-				      <input type="text" value={this.props.term} onChange={this.props.onSearch} className="form-control" placeholder="Search for..."/>
+				      <input type="text" value={this.props.term} onChange={this.onSearch.bind(this)} className="form-control" placeholder="Search for..."/>
 				  </div>
 				</div>
 			)

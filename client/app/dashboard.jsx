@@ -59,9 +59,7 @@ class Dashboard extends Component{
 		})
 	}
 
-	onSearch(e){
-		let term = e.target.value;
-		console.log(term)
+	onSearch(term){
 		let notes = this.initialData.slice();
 		let filter = notes.filter(item=> ~(item.name.toLowerCase().indexOf(term)))
 		this.setState({
@@ -78,6 +76,7 @@ class Dashboard extends Component{
 			}
 			return item;
 		});
+		this.initialData=notes;
 		this.setState({notes: notes})
 	}
 
@@ -108,6 +107,7 @@ class Dashboard extends Component{
 	    	action: 'UPDATE'
 	    }
 	  });
+	  this.initialData=notes;
 		console.log('Note Updated: ',note)
 	}
 
@@ -127,18 +127,15 @@ class Dashboard extends Component{
 	}
 
 	onDelete(note){
-    let notes = this.state.notes.filter(item=> item.id !== note.id);
-		
+    let notes = this.initialData.filter(item=> item.id !== note.id);
     this.setState({ 
-    	notes: notes,
-    	noteEdit:{
-	    	action: 'CREATE'
-	    }
+    	notes: notes
     });
+    this.initialData=notes;
 	}
 	
 	onAdd (note){
-		let notes = this.state.notes.slice();
+		let notes = this.initialData;
 		note.id=Date.now().toString();
 
 		let isExist=notes.some(item => item.id==note.id );
@@ -152,9 +149,10 @@ class Dashboard extends Component{
 			return
 		}
 		notes.push(note);
-		this.setState({notes: notes})
+		this.setState({notes: notes.slice()})
 		console.log('Note Added: ',note)
 		console.log('Notes',notes)
+		this.onSearch('');
 	}
 
 	closeAlert(){
