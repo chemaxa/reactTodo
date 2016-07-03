@@ -25,12 +25,12 @@ app.use(serve('client'));
 //Router
 require('./routes')(app);
 
-app.listen(1337);
-
+app.listen(3000);
+console.log('Listen on 3000');
 // If the Node process ends, close the Mongoose connection 
 process.on('SIGINT', function() {
     mongoose.connection.close(function() {
-        console.log('Mongoose default connection disconnected through app termination');
+        log('Mongoose default connection disconnected through app termination');
         process.exit(0);
     });
 });

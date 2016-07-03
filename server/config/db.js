@@ -1,4 +1,4 @@
 'use strict';
 module.exports = {
-    url: "mongodb://yat:Ydha&26Ol!#@ds047114.mongolab.com:47114/yat"
+    url: "mongodb://react-todo:react-todo@ds040309.mlab.com:40309/react-todo"
 };

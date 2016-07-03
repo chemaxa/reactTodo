@@ -1,3 +1,5 @@
+import {Constants as CNST} from './constants'
+const xhr = new XMLHttpRequest();
 const noteModel = (function() {
 		
 		let noteList = [{
@@ -27,7 +29,28 @@ const noteModel = (function() {
 				completed: true
 		}];
 
+		
+		let addNote=function(note){
+			return new Promise(function(success, error) {
+				xhr.open('POST', CNST.API_POST_URL, true);
+				xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+				xhr.send(JSON.stringify(note));
+				xhr.onload=success;
+				xhr.onerror=error;
+			})
+		}
+		let getNotes=function(){
+			return new Promise(function(success, error) {
+				xhr.open('GET', CNST.API_GET_ALL_URL, true);
+				xhr.send();
+				xhr.onload=success;
+				xhr.onerror=error;
+			})
+		}
+		
 		return {
+				addNote: addNote,
+				getNotes: getNotes,
 				noteList: noteList
 		};
 })();

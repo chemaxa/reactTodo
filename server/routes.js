@@ -27,7 +27,7 @@ module.exports = function (app) {
     router.post('/api/todos', koaBody, function* () {
         let todo = new Todo({
             name: this.request.body.name,
-            description: this.request.body.description,
+            text: this.request.body.text,
             completed: this.request.body.completed,
             date: this.request.body.date
         });
@@ -51,7 +51,7 @@ module.exports = function (app) {
                 _id: this.params.id
             }, {
                 name: this.request.body.name,
-                description: this.request.body.description,
+                text: this.request.body.text,
                 completed: this.request.body.completed,
                 date: this.request.body.date
             });
