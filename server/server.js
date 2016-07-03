@@ -6,7 +6,8 @@ let koa = require('koa'),
     log = console.log,
     logger = require('koa-logger'),
     mongoose = require('mongoose'),
-    app = koa();
+    app = koa(),
+    cors = require('kcors');
 
 //Connect to Db
 mongoose.connect(db.url);
@@ -15,6 +16,9 @@ cnct.on('error', console.error.bind(console, 'connection error:'));
 cnct.once('open', function() {
     log('Connected to Db');
 });
+
+//CORS
+app.use(cors());
 
 //Logger
 app.use(logger());

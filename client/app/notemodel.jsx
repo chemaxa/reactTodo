@@ -1,9 +1,9 @@
-import {Constants as CNST} from './constants'
-const xhr = new XMLHttpRequest();
+import CNST from './constants'
+import restHelper from './resthelper'
+
 const noteModel = (function() {
-		
-		let noteList = [{
-				id: 2,
+	
+	let noteList = [{
 				name: 'bac',
 				text: 'Start with React',
 				date: '2016-03-14',
@@ -29,29 +29,43 @@ const noteModel = (function() {
 				completed: true
 		}];
 
-		
-		let addNote=function(note){
-			return new Promise(function(success, error) {
-				xhr.open('POST', CNST.API_POST_URL, true);
-				xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-				xhr.send(JSON.stringify(note));
-				xhr.onload=success;
-				xhr.onerror=error;
-			})
+		let getNotes = ()=>{return restHelper('GET', CNST.GET_ALL)};
+
+		let getNote = (id)=>{return restHelper('GET', CNST.GET_ALL+'/'+id)};
+
+		let addNote=(note)=>{
+			console.log(note)
+			return restHelper('POST',CNST.ADD_ITEM,note);
 		}
-		let getNotes=function(){
-			return new Promise(function(success, error) {
-				xhr.open('GET', CNST.API_GET_ALL_URL, true);
-				xhr.send();
-				xhr.onload=success;
-				xhr.onerror=error;
-			})
+
+		let deleteNote=(id)=>{
+			console.log(id)
+			return restHelper('DELETE',CNST.DELETE_ITEM+'/'+id);
 		}
+
+		let updateNote=(note)=>{
+			console.log(note)
+			return restHelper('PUT',CNST.EDIT_ITEM+'/'+note.id,note);
+		}		
 		
+		!(function init(){
+				getNotes()
+				.then((notes)=>{
+					console.info(notes)
+					noteList=notes;
+				})
+				.catch((error)=>{
+					console.error(error);
+				})
+		})();
+
 		return {
-				addNote: addNote,
-				getNotes: getNotes,
-				noteList: noteList
+				addNote,
+				deleteNote,
+				updateNote,
+				getNotes,
+				getNote,
+				noteList
 		};
 })();
 
