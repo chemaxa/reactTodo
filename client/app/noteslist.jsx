@@ -3,10 +3,17 @@ import React, {Component} from 'react'
 
 class NotesList extends Component{
 	render(){
-		let {onDelete,onEdit,noteEdit,notes,setCompleted} = this.props;		 		 
-		if(!notes.length){
+		let {onDelete,onEdit,noteEdit,notes,setCompleted,isLoading} = this.props;		 		 
+		if(!notes.length && !isLoading){
 			return(
 				<h3>Nothing found :(</h3>
+			)
+		}
+		if(isLoading){
+			return(
+				<div className="text-center">
+					<img src="assets/img/preload.gif" alt="preloader"/>
+				</div>
 			)
 		}
 		console.log(notes);
@@ -15,7 +22,7 @@ class NotesList extends Component{
 				<div className="list-group">
 					{notes.map(function(note){
 						return (<Note 
-										key={note.id} 
+										key={note._id} 
 										note={note}
 										noteEdit={noteEdit} 
 										onDelete={onDelete.bind(null, note)} 

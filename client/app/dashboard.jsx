@@ -7,9 +7,10 @@ import noteModel from './notemodel';
 class Dashboard extends Component{
 		constructor(props){
 		super(props);
-		this.initialData=noteModel.noteList;
+		console.log(props);
+	
 		this.state={
-			notes:this.initialData,
+			notes:[],
 			noteEdit:{
 				id: '',
 				data: {
@@ -26,8 +27,8 @@ class Dashboard extends Component{
 				asc: false
 			},
 			term: '',
-			messages: {}
-
+			messages: {},
+			isLoading: true
 		};
 
 		this.onSort = this.onSort.bind(this);
@@ -40,6 +41,21 @@ class Dashboard extends Component{
 		this.clearForm=this.clearForm.bind(this);
 		this.onSearch=this.onSearch.bind(this);
 		this.closeAlert=this.closeAlert.bind(this);
+
+	}
+
+	componentDidMount(){
+			noteModel.getNotes()
+			.then((data)=>{
+				console.info(JSON.parse(data));
+				this.setState({
+					notes:JSON.parse(data),
+					isLoading: false
+				})
+			})
+			.catch((error)=>{
+				console.error(error);
+			})
 	}
 
 	onSort (param){
@@ -183,7 +199,8 @@ class Dashboard extends Component{
 					/>
 				</div>
 				<div className="col-md-7">
-					<NotesList 
+					<NotesList
+						isLoading={this.state.isLoading}
 						notes={this.state.notes} 
 						onEdit={this.onEdit} 
 						setCompleted={this.setCompleted} 

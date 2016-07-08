@@ -1,9 +1,9 @@
 import CNST from './constants'
-import restHelper from './resthelper'
+import utils from './utils'
 
 const noteModel = (function() {
 	
-	let noteList = [{
+	/*let noteList = [{
 				name: 'bac',
 				text: 'Start with React',
 				date: '2016-03-14',
@@ -28,27 +28,28 @@ const noteModel = (function() {
 				date: '2016-08-04',
 				completed: true
 		}];
+		let noteList=[];
+		*/
 
-		let getNotes = ()=>{return restHelper('GET', CNST.GET_ALL)};
+		let getNotes = ()=>{return utils.restHelper('GET', CNST.GET_ALL)};
 
-		let getNote = (id)=>{return restHelper('GET', CNST.GET_ALL+'/'+id)};
+		let getNote = (id)=>{return utils.restHelper('GET', CNST.GET_ALL+'/'+id)};
 
 		let addNote=(note)=>{
 			console.log(note)
-			return restHelper('POST',CNST.ADD_ITEM,note);
+			return utils.restHelper('POST',CNST.ADD_ITEM,note);
 		}
 
 		let deleteNote=(id)=>{
 			console.log(id)
-			return restHelper('DELETE',CNST.DELETE_ITEM+'/'+id);
+			return utils.restHelper('DELETE',CNST.DELETE_ITEM+'/'+id);
 		}
 
 		let updateNote=(note)=>{
 			console.log(note)
-			return restHelper('PUT',CNST.EDIT_ITEM+'/'+note.id,note);
+			return utils.restHelper('PUT',CNST.EDIT_ITEM+'/'+note.id,note);
 		}		
-		
-		!(function init(){
+		/*!(function init(){
 				getNotes()
 				.then((notes)=>{
 					console.info(notes)
@@ -57,15 +58,13 @@ const noteModel = (function() {
 				.catch((error)=>{
 					console.error(error);
 				})
-		})();
-
+		})();*/
 		return {
 				addNote,
 				deleteNote,
 				updateNote,
 				getNotes,
-				getNote,
-				noteList
+				getNote
 		};
 })();
 

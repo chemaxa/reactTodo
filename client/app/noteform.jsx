@@ -41,7 +41,7 @@ class NoteForm extends Component{
 	onSubmit  (e) {
 		e.preventDefault();
 		let note={
-			id: e.target.elements.id.value,
+			_id: e.target.elements.id.value,
 			name: e.target.elements.name.value,
 			date: e.target.elements.date.value,
 			text: e.target.elements.text.value,
