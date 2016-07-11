@@ -4,7 +4,8 @@ import utils from './utils'
 class NoteForm extends Component{
 	constructor (props) {
 		super(props);
-		this.state = this.props.noteEdit;
+		console.log('Noteform props: ',props);
+		this.state = props.noteEdit;
 		this.noteChange=this.noteChange.bind(this);
 		this.componentWillReceiveProps=this.componentWillReceiveProps.bind(this);
 		this.onSubmit=this.onSubmit.bind(this);
@@ -12,11 +13,10 @@ class NoteForm extends Component{
 	}
 
 	noteChange(e) {
-		let self = this;
 		this.setState({
 				data:{
-					id : this.state.data.id || '',
-					name : e.target.name == 'name' ? e.target.value : self.state.data.name,
+					_id : this.state.data._id || '',
+					name : e.target.name == 'name' ? e.target.value : this.state.data.name,
 					date :e.target.name == 'date' ? e.target.value : this.state.data.date,
 					text :e.target.name == 'text' ? e.target.value : this.state.data.text,
 					completed :e.target.name == 'completed' ? e.target.checked : this.state.data.completed
@@ -25,12 +25,12 @@ class NoteForm extends Component{
 	}
 
 	componentWillReceiveProps(nextProps) {
-		let {date,id,text,completed,name} = nextProps.noteEdit.data;
+		let {date,_id,text,completed,name} = nextProps.noteEdit.data;
 		let {YYYY,MM,DD}=utils.convertDate(date);
   	this.setState({
 				data:{
 					date:`${YYYY}-${MM}-${DD}`,
-					id,
+					_id,
 					text,
 					completed,
 					name
@@ -47,14 +47,17 @@ class NoteForm extends Component{
 			text: e.target.elements.text.value,
 			completed: e.target.elements.completed.checked
 		}
-		let isExist=this.props.notes.some(item=> item.id==note.id);
-		if(note.id && isExist)
+
+		let isExist=this.props.notes.some(item=> item._id==note._id);
+		if(note._id && isExist)
 			this.props.onUpdate(note)
 		else
 			this.props.onAdd(note)
 	}
 	render(){
-		let {id,name,text,date,completed} = this.state.data;
+
+		let {_id,name,text,date,completed} = this.state.data;
+		
 		if(this.props.messages.isExist){
 			return (
 				<div className="alert alert-danger" role="alert">
@@ -67,7 +70,7 @@ class NoteForm extends Component{
 		return(
 			<form className="panel panel-default" onSubmit={this.onSubmit}>
 				<div className="panel-body">
-					<input type="hidden" name="id" value={id}/>
+					<input type="hidden" name="id" value={_id}/>
 					<div className="form-group">
 						<label>Name</label>
 					  	<input type="text" required value={name} onChange={this.noteChange} name="name" className="form-control" placeholder="Имя"/>

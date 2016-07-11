@@ -16,17 +16,17 @@ class Note extends Component{
 		this.props.onDelete()
 	}
 	render(){
-		 	let {id, date,name,text,completed} = this.props.note;
-			let editId = this.props.noteEdit.id;
+		 let {_id, date,name,text,completed} = this.props.note;
 			let itemClass= "list-group-item";
-			if(id == editId){
+			let editId=this.props.noteEdit.data._id;
+			if(_id == editId){
 				itemClass +=" active ";
 			}
 			if(completed){
 				itemClass +=" list-group-item-info ";
 			}
 			return (
-				<a href="#" className={itemClass} onClick={this.onEdit.bind(this)}>
+				<a href={_id} className={itemClass} onClick={this.onEdit.bind(this)}>
 				    <button type="button" className="close" aria-label="Close" onClick={this.onDelete.bind(this)}><span aria-hidden="true">&times;</span></button>
 		        <h4 className="list-group-item-heading">{name}</h4>
 		        <p className="list-group-item-text">{text}</p>
@@ -44,5 +44,6 @@ Note.propTypes = {
 	onDelete: React.PropTypes.func,
 	onEdit: React.PropTypes.func,
 	setCompleted:React.PropTypes.func,
+	noteEdit: React.PropTypes.object
 };
 export default Note;

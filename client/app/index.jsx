@@ -4,12 +4,13 @@ import App from './app';
 import About from './about'
 import Home from './home'
 import Dashboard from './dashboard'
-
-import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
+import Note from './note'
+import NotFound from './notfound'
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router'
 
 function onEnter(nextState, replace) {
 	console.log("Enter to Dashboard");
-	
+	console.log('NextState: ',nextState)
   /*if (!auth.loggedIn()) {
     replace({
       pathname: '/login',
@@ -18,11 +19,12 @@ function onEnter(nextState, replace) {
   }*/
 }
 ReactDOM.render(
- <Router history={hashHistory}>
+ <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path="about" component={About} />
-      <Route path="dashboard" component={Dashboard} onEnter={onEnter}/>
+      <Route path="dashboard(/:todoId)" component={Dashboard} onEnter={onEnter}/>
     </Route>
+    <Route path='*' component={NotFound} />
   </Router>
   ,document.getElementById('App'));

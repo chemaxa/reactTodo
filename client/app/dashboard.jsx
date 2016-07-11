@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import NoteForm from './noteform';
 import NotesList from './noteslist';
 import Controls from './controls';
@@ -7,14 +7,13 @@ import noteModel from './notemodel';
 class Dashboard extends Component{
 		constructor(props){
 		super(props);
-		console.log(props);
-	
+		console.log('Dashboard props: ',props);
+		
 		this.state={
 			notes:[],
-			noteEdit:{
-				id: '',
+			noteEdit: {
 				data: {
-					id: '',
+					_id: '',
 					name: '',
 					date: '',
 					text: '',
@@ -45,19 +44,57 @@ class Dashboard extends Component{
 	}
 
 	componentDidMount(){
-			noteModel.getNotes()
+		noteModel
+			.getNotes()
 			.then((data)=>{
-				console.info(JSON.parse(data));
+				let notes = JSON.parse(data),
+								noteEdit = {
+									data: {
+										_id: '',
+										name: '',
+										date: '',
+										text: '',
+										completed: false
+									},
+									action: 'CREATE'
+								};
+
+				if(this.props.params.todoId){
+						noteEdit.data=notes.filter((item)=>{
+							return item._id===this.props.params.todoId
+						})[0];
+						
+				}
+				console.log('NoteEdit: ',noteEdit);
 				this.setState({
-					notes:JSON.parse(data),
+					noteEdit,
+					notes,
 					isLoading: false
 				})
+				
 			})
 			.catch((error)=>{
 				console.error(error);
 			})
+		
+			//console.log(this.props.params.todoId);
 	}
-
+	componentWillReceiveProps(nextProps) {
+		if(!nextProps.params.todoId){
+			this.setState({
+				noteEdit: {
+					data: {
+							_id: '',
+							name: '',
+							date: '',
+							text: '',
+							completed: false
+						},
+						action: 'CREATE'
+					}
+			});
+		}
+	}
 	onSort (param){
 		let notes = this.state.notes.slice();
 		let asc = this.state.sorting.asc;
@@ -99,13 +136,11 @@ class Dashboard extends Component{
 	onEdit(note){
 		this.setState({
 			noteEdit: {
-				id: note.id,
-				className: "list-group-item active",
 				data: note,
 				action: 'EDIT'
 			}
 		});
-
+ 	this.context.router.push(`/dashboard/${note._id}`)
 	}
 
 	onUpdate(note){
@@ -118,12 +153,11 @@ class Dashboard extends Component{
 		this.setState({
 			notes: notes,
 			noteEdit:{
-	    	id: note.id,
-	    	data: note,
-	    	action: 'UPDATE'
-	    }
-	  });
-	  this.initialData=notes;
+	  	data: note,
+	  	action: 'UPDATE'
+	  }
+	 });
+	 this.initialData=notes;
 		console.log('Note Updated: ',note)
 	}
 
@@ -131,7 +165,7 @@ class Dashboard extends Component{
 		this.setState({
 			noteEdit:{
 				data:{
-					id: '',
+					_id: '',
 					name: '',
 					date: '',
 					text: '',
@@ -140,6 +174,7 @@ class Dashboard extends Component{
 				action: 'CREATE'
 			}
 		})
+			this.context.router.push('/dashboard')
 	}
 
 	onDelete(note){
@@ -213,4 +248,8 @@ class Dashboard extends Component{
 	}
 }
 
+
+Dashboard.contextTypes = {
+  router: PropTypes.object.isRequired
+}
 export default Dashboard

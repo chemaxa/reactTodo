@@ -12,11 +12,11 @@ class NotesList extends Component{
 		if(isLoading){
 			return(
 				<div className="text-center">
-					<img src="assets/img/preload.gif" alt="preloader"/>
+					<img src="/assets/img/preload.gif" alt="preloader"/>
 				</div>
 			)
 		}
-		console.log(notes);
+		
 
 		return (
 				<div className="list-group">
