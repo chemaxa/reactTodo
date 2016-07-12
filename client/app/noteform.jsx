@@ -26,17 +26,16 @@ class NoteForm extends Component{
 
 	componentWillReceiveProps(nextProps) {
 		let {date,_id,text,completed,name} = nextProps.noteEdit.data;
-		let {YYYY,MM,DD}=utils.convertDate(date);
-  	this.setState({
+  this.setState({
 				data:{
-					date:`${YYYY}-${MM}-${DD}`,
+					date:utils.convertDate(date),
 					_id,
 					text,
 					completed,
 					name
 				}
 		});
-  }
+ }
 
 	onSubmit  (e) {
 		e.preventDefault();

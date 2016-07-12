@@ -43,7 +43,7 @@ class Controls extends Component{
 							Status
 						</button>
 						&nbsp;
-						<button type="button" className="btn btn-warning" onClick={this.props.clearCompleted}>
+						<button type="button" className="btn btn-warning pull-right" onClick={this.props.clearCompleted}>
 						 <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
 							&nbsp;Clear completed
 						</button>

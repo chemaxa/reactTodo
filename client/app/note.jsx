@@ -17,6 +17,12 @@ class Note extends Component{
 	}
 	render(){
 		 let {_id, date,name,text,completed} = this.props.note;
+		 let options = {
+			  year: 'numeric',
+			  month: 'numeric',
+			  day: 'numeric',
+			};
+		 date = new Date(date).toLocaleString("ru", options);
 			let itemClass= "list-group-item";
 			let editId=this.props.noteEdit.data._id;
 			if(_id == editId){
