@@ -40,7 +40,7 @@ class Dashboard extends Component{
 		this.clearForm=this.clearForm.bind(this);
 		this.onSearch=this.onSearch.bind(this);
 		this.closeAlert=this.closeAlert.bind(this);
-
+		this.clearCompleted=this.clearCompleted.bind(this);
 	}
 
 	componentDidMount(){
@@ -132,6 +132,23 @@ class Dashboard extends Component{
 		});
  	this.context.router.push(`/dashboard/${note._id}`)
 	}
+	
+	clearCompleted(){
+		let completed = this.state.notes.filter(item=>item.completed);
+		noteModel
+			.clearCompleted(completed)
+			.then((data)=>{
+				let notes = JSON.parse(data);
+				this.setState({notes: notes});
+				this.initialData=notes;
+				console.log('Response: ', notes);
+			})
+			.catch((error)=>{
+				console.error(error);
+			});
+
+		console.dir(completed);
+	}
 
 	setCompleted (note) {
 		note.completed=!note.completed;
@@ -166,22 +183,6 @@ class Dashboard extends Component{
 			});
 	}
 
-	clearForm(){
-		this.setState({
-			noteEdit:{
-				data:{
-					_id: '',
-					name: '',
-					date: '',
-					text: '',
-					completed: false	
-				},
-				action: 'CREATE'
-			}
-		})
-		this.context.router.push('/dashboard')
-	}
-
 	onDelete(note){
   noteModel
 			.deleteNote(note._id)
@@ -211,6 +212,22 @@ class Dashboard extends Component{
 		this.onSearch('');
 	}
 
+	clearForm(){
+		this.setState({
+			noteEdit:{
+				data:{
+					_id: '',
+					name: '',
+					date: '',
+					text: '',
+					completed: false	
+				},
+				action: 'CREATE'
+			}
+		})
+		this.context.router.push('/dashboard')
+	}
+
 	closeAlert(){
 		this.setState({
 			messages:{}
@@ -227,6 +244,7 @@ class Dashboard extends Component{
 							notes={this.state.notes}
 							sorting={this.onSort}
 							sortState={this.state.sorting}
+							clearCompleted={this.clearCompleted}
 						/>
 					<NoteForm 
 						onAdd={this.onAdd}

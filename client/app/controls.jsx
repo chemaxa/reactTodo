@@ -24,22 +24,29 @@ class Controls extends Component{
 		let sorting=this.props.sorting;
 		return(
 			<div className="panel panel-default">
+					<div className="panel-heading">
+	    	<h3 className="panel-title">Sorting</h3>
+	  		</div>
 					<div className="panel-body">
 						<button type="button" className="btn btn-info" onClick={()=>sorting('name')}>
 						 <span className={this.getSortByNameClassName()} aria-hidden="true"></span>
-							Sort by Name
+							Name
 						</button>
 						&nbsp;
 						<button type="button" className="btn btn-info" onClick={()=>sorting('date')}>
 						 <span className={this.getSortByDateClassName()} aria-hidden="true"></span>
-							Sort by Date
+							Date
 						</button>
 						&nbsp;
 						<button type="button" className="btn btn-info" onClick={()=>sorting('completed')}>
 						 <span className={this.getSortByStatusClassName()} aria-hidden="true"></span>
-							Sort by status
+							Status
 						</button>
-						
+						&nbsp;
+						<button type="button" className="btn btn-warning" onClick={this.props.clearCompleted}>
+						 <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							&nbsp;Clear completed
+						</button>
 					</div>
 					<div className="form-group panel-body" >
 				      <input type="text" value={this.props.term} onChange={this.onSearch.bind(this)} className="form-control" placeholder="Search for..."/>

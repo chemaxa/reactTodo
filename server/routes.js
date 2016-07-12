@@ -7,7 +7,7 @@ let Todo = require('./config/models'),
 module.exports = function (app) {
     // Redirect to main page from all routes
 
-    //Return all todos
+    //Return list of todos
     router.get('/api/todos', function* () {
         this.body = yield Todo.find({});
     });
@@ -75,6 +75,27 @@ module.exports = function (app) {
             this.body = e.message;
         }
     });
+    
+    // Clear completed todos
+    router.post('/api/todos/clear', koaBody, function* () {
+        console.log('IDS: ',this.request.body);
+        let notes = this.request.body;
+        let ids = notes.map(item=>item._id);
+
+        try {
+            let todo = yield Todo.remove({
+                _id: {
+                    $in: ids
+                }
+            });
+            //Return new todolist
+            this.body = yield Todo.find({});
+        } catch (e) {
+            this.body = e.message;
+        }
+    });
+
+
     router.redirect('/*', '/');
     app.use(router.routes());
 };
