@@ -20,16 +20,21 @@ class NotesList extends Component{
 
 		return (
 				<div className="list-group">
-					{notes.map(function(note){
-						return (<Note 
+					{
+						notes.map((note)=>{
+							return (
+								<Note 
 										key={note._id} 
 										note={note}
 										noteEdit={noteEdit} 
 										onDelete={onDelete.bind(null, note)} 
 										setCompleted={setCompleted.bind(null, note)}
 										onEdit={onEdit.bind(null,note)}
-						/>)
-					})}
+								/>
+							)
+						}
+						)
+					}
 				</div>
 		)
 	}

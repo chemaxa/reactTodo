@@ -45,7 +45,7 @@ class Dashboard extends Component{
 
 	componentDidMount(){
 		noteModel
-			.getNotes()
+			.getList()
 			.then((data)=>{
 				let notes = JSON.parse(data),
 								noteEdit = {
@@ -58,7 +58,7 @@ class Dashboard extends Component{
 									},
 									action: 'CREATE'
 								};
-
+			
 				if(this.props.params.todoId){
 						noteEdit.data=notes.filter((item)=>{
 							return item._id===this.props.params.todoId
@@ -71,6 +71,7 @@ class Dashboard extends Component{
 					notes,
 					isLoading: false
 				})
+				this.initialData=notes.slice();
 				
 			})
 			.catch((error)=>{
@@ -95,6 +96,7 @@ class Dashboard extends Component{
 			});
 		}
 	}
+
 	onSort (param){
 		let notes = this.state.notes.slice();
 		let asc = this.state.sorting.asc;
@@ -121,18 +123,6 @@ class Dashboard extends Component{
 		})
 	}
 
-	setCompleted (note) {
-		note.completed=!note.completed;
-		let notes = this.state.notes.map((item)=>{
-			if(item.id == note.id){
-				return {...note}
-			}
-			return item;
-		});
-		this.initialData=notes;
-		this.setState({notes: notes})
-	}
-
 	onEdit(note){
 		this.setState({
 			noteEdit: {
@@ -143,22 +133,37 @@ class Dashboard extends Component{
  	this.context.router.push(`/dashboard/${note._id}`)
 	}
 
+	setCompleted (note) {
+		note.completed=!note.completed;
+		noteModel
+			.updateNote(note)
+			.then((data)=>{
+				let notes = JSON.parse(data);
+				this.setState({notes})
+				this.initialData=notes.slice();
+			})
+			.catch((error)=>{
+				console.error(error);
+			});
+	}
+
 	onUpdate(note){
-		let notes = this.state.notes.map((item)=>{
-			if(item.id == note.id){
-				return {...note}
-			}
-			return item;
-		});
-		this.setState({
-			notes: notes,
-			noteEdit:{
-	  	data: note,
-	  	action: 'UPDATE'
-	  }
-	 });
-	 this.initialData=notes;
-		console.log('Note Updated: ',note)
+		noteModel
+			.updateNote(note)
+			.then((data)=>{
+				let notes = JSON.parse(data);
+				this.setState({
+					notes,
+					noteEdit:{
+			  	data: note,
+			  	action: 'UPDATE'
+			  }
+			 });
+			 this.initialData=notes;
+			})
+			.catch((error)=>{
+				console.error(error);
+			});
 	}
 
 	clearForm(){
@@ -174,35 +179,35 @@ class Dashboard extends Component{
 				action: 'CREATE'
 			}
 		})
-			this.context.router.push('/dashboard')
+		this.context.router.push('/dashboard')
 	}
 
 	onDelete(note){
-    let notes = this.initialData.filter(item=> item.id !== note.id);
-    this.setState({ 
-    	notes: notes
-    });
-    this.initialData=notes;
+  noteModel
+			.deleteNote(note._id)
+			.then((data)=>{
+				let notes = JSON.parse(data);
+				this.setState({ 
+			 	notes: notes
+			 });
+			 this.initialData=notes;
+			})
+			.catch((error)=>{
+				console.error(error);
+			});
 	}
 	
 	onAdd (note){
-		let notes = this.initialData;
-		note.id=Date.now().toString();
-
-		let isExist=notes.some(item => item.id==note.id );
-
-		if(isExist) {
-			this.setState({
-				messages:{
-					isExist: 'This todo is already exist!'
-				}
+		noteModel
+		 .createNote(note)
+			.then((data)=>{
+				let notes = JSON.parse(data);
+				this.setState({notes: notes});
+				this.initialData=notes;
+			})
+			.catch((error)=>{
+				console.error(error);
 			});
-			return
-		}
-		notes.push(note);
-		this.setState({notes: notes.slice()})
-		console.log('Note Added: ',note)
-		console.log('Notes',notes)
 		this.onSearch('');
 	}
 
@@ -211,6 +216,7 @@ class Dashboard extends Component{
 			messages:{}
 		})
 	}
+
 	render(){
 		return(
 			<div className="row">

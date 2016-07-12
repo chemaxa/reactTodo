@@ -48,7 +48,7 @@ class NoteForm extends Component{
 			completed: e.target.elements.completed.checked
 		}
 
-		let isExist=this.props.notes.some(item=> item._id==note._id);
+		let isExist=this.props.notes.some(item => item._id==note._id);
 		if(note._id && isExist)
 			this.props.onUpdate(note)
 		else
