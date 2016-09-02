@@ -26,7 +26,7 @@ class NoteForm extends Component{
 
 	componentWillReceiveProps(nextProps) {
 		let {date,_id,text,completed,name} = nextProps.noteEdit.data;
-  this.setState({
+  	this.setState({
 				data:{
 					date:utils.convertDate(date),
 					_id,

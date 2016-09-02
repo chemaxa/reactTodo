@@ -130,7 +130,7 @@ class Dashboard extends Component{
 				action: 'EDIT'
 			}
 		});
- 	this.context.router.push(`/dashboard/${note._id}`)
+ 		this.context.router.push(`/dashboard/${note._id}`);
 	}
 	
 	clearCompleted(){
