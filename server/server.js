@@ -3,6 +3,7 @@
 let koa = require('koa'),
   serve = require('koa-static'),
   db = require('./config/db'),
+  router = require('./routes'),
   log = console.log,
   logger = require('koa-logger'),
   mongoose = require('mongoose'),
@@ -28,10 +29,10 @@ app.use(logger());
 app.use(serve('client'));
 
 //Router
-require('./routes')(app);
+router(app);
 
 app.listen(3000);
-log('Listen on 3000');
+log('Listen on http://localhost:3000');
 
 // If the Node process ends, close the Mongoose connection 
 process.on('SIGINT', function() {
