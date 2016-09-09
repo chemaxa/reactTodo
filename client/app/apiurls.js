@@ -1,9 +1,11 @@
-let apiUrl= 'http://localhost:3000';
+import CONFIG from './config'
+
 const API={
-	ADD_ITEM: apiUrl+'/api/todos',
-	EDIT_ITEM: apiUrl+'/api/todos',
-	GET_ALL: apiUrl+'/api/todos',
-	DELETE_ITEM: apiUrl+'/api/todos',
-	CLEAR_COMPLETED: apiUrl+'/api/todos/clear'
+	ADD_ITEM: CONFIG.APIHOST+'/api/todos',
+	EDIT_ITEM: CONFIG.APIHOST+'/api/todos',
+	GET_ALL: CONFIG.APIHOST+'/api/todos',
+	DELETE_ITEM: CONFIG.APIHOST+'/api/todos',
+	CLEAR_COMPLETED: CONFIG.APIHOST+'/api/todos/clear'
 };
+
 export default API;

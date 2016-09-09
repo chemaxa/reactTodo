@@ -48,24 +48,23 @@ class Dashboard extends Component{
 			.getList()
 			.then((data)=>{
 				let notes = JSON.parse(data),
-								noteEdit = {
-									data: {
-										_id: '',
-										name: '',
-										date: '',
-										text: '',
-										completed: false
-									},
-									action: 'CREATE'
-								};
+						noteEdit = {
+							data: {
+								_id: '',
+								name: '',
+								date: '',
+								text: '',
+								completed: false
+							},
+							action: 'CREATE'
+						};
 			
-				if(this.props.params.todoId){
+					if(this.props.params.todoId){
 						noteEdit.data=notes.filter((item)=>{
 							return item._id===this.props.params.todoId
-						})[0];
-						
+					})[0];
 				}
-				console.log('NoteEdit: ',noteEdit);
+				
 				this.setState({
 					noteEdit,
 					notes,
@@ -141,13 +140,10 @@ class Dashboard extends Component{
 				let notes = JSON.parse(data);
 				this.setState({notes: notes});
 				this.initialData=notes;
-				console.log('Response: ', notes);
 			})
 			.catch((error)=>{
 				console.error(error);
 			});
-
-		console.dir(completed);
 	}
 
 	setCompleted (note) {

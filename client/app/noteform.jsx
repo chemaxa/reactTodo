@@ -4,7 +4,6 @@ import utils from './utils'
 class NoteForm extends Component{
 	constructor (props) {
 		super(props);
-		console.log('Noteform props: ',props);
 		this.state = props.noteEdit;
 		this.noteChange=this.noteChange.bind(this);
 		this.componentWillReceiveProps=this.componentWillReceiveProps.bind(this);
