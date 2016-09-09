@@ -1,99 +1,29 @@
 'use strict';
-let Todo = require('./models/todo'),
-  logger = require('koa-logger'),
+let 
+  
   router = require('koa-router')(),
-  koaBody = require('koa-body')();
+  koaBody = require('koa-body')(),
+  mdwrs = require('./middlewares');
 
 module.exports = function(app) {
 
-
   //Return list of todos
-  router.get('/api/todos', function*() {
-    this.body = yield Todo.find({});
-  });
+  router.get('/api/todos', mdwrs.getAll);
 
   //Fetch todo by Id
-  router.get('/api/todos/:id', function*() {
-    try {
-      this.body = yield Todo.find({
-        _id: this.params.id.split(',')
-      });
-    } catch (e) {
-      this.body = e.message;
-    }
-  });
+  router.get('/api/todos/:id', mdwrs.getById);
 
   // create todo and send back all todos after creation
-  router.post('/api/todos', koaBody, function*() {
-    let todo = new Todo({
-      name: this.request.body.name,
-      text: this.request.body.text,
-      completed: this.request.body.completed,
-      date: this.request.body.date
-    });
-
-    try {
-      yield todo.save();
-      this.body = yield Todo.find({});
-    } catch (e) {
-      console.log('Error: ', e);
-      this.body = e.message;
-    }
-  });
-
+  router.post('/api/todos', koaBody, mdwrs.create);
 
   // update todo
-  router.put('/api/todos/:id', koaBody, function*() {
-    console.log('This: ', this.params.id);
-    console.log(this.request.body);
-    try {
-      let todo = yield Todo.update({
-        _id: this.params.id
-      }, {
-        name: this.request.body.name,
-        text: this.request.body.text,
-        completed: this.request.body.completed,
-        date: this.request.body.date
-      });
-      this.body = yield Todo.find({});
-    } catch (e) {
-      this.body = e.message;
-    }
-  });
+  router.put('/api/todos/:id', koaBody, mdwrs.update);
 
   // delete  todo
-  router.del('/api/todos/:id', function*() {
-    try {
-      let todo = yield Todo.remove({
-        _id: {
-          $in: this.params.id.split(',')
-        }
-      });
-      //Return new todolist
-      this.body = yield Todo.find({});
-    } catch (e) {
-      this.body = e.message;
-    }
-  });
+  router.del('/api/todos/:id', mdwrs.deleteById);
 
   // Clear completed todos
-  router.post('/api/todos/clear', koaBody, function*() {
-    console.log('IDS: ', this.request.body);
-    let notes = this.request.body;
-    let ids = notes.map(item => item._id);
-
-    try {
-      let todo = yield Todo.remove({
-        _id: {
-          $in: ids
-        }
-      });
-      //Return new todolist
-      this.body = yield Todo.find({});
-    } catch (e) {
-      this.body = e.message;
-    }
-  });
+  router.post('/api/todos/clear', koaBody, mdwrs.clearCompleted);
 
   // Redirect to main page from all routes
   router.redirect('/*', '/');
