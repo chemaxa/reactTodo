@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Auth from './auth';
 
 class Login extends Component{
 	constructor(){
@@ -13,7 +14,12 @@ class Login extends Component{
 		e.preventDefault();
 		let login=e.target.elements.email.value;
 		let password=e.target.elements.password.value;
-		console.log(password,login);
+		console.log(password,login,Auth);
+		Auth
+			.checkPermissions({login,password})
+			.then((data)=>{
+				console.log(JSON.parse(data));
+			});
 	}
 	render(){
 		return(
@@ -28,11 +34,11 @@ class Login extends Component{
 			        <form onSubmit={this.onSubmit} id="loginForm">
 							  <div className="form-group">
 							    <label for="email">Email address</label>
-							    <input type="email" id="email" className="form-control" placeholder="Email"/>
+							    <input type="email" id="email" className="form-control" placeholder="Email" required/>
 							  </div>
 							  <div className="form-group">
 							    <label for="password">Password</label>
-							    <input type="password" id="password" className="form-control" placeholder="Password"/>
+							    <input type="password" id="password" className="form-control" placeholder="Password" required/>
 							  </div>
 							</form>
 			      </div>

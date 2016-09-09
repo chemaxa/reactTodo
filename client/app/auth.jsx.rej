@@ -1,0 +1,20 @@
+diff a/client/app/auth.jsx b/client/app/auth.jsx	(rejected hunks)
+@@ -0,0 +1,17 @@
++import utils from './utils'
++import CONFIG from './config'
++
++let Auth = ()=>{
++
++	let checkPermissions = (credentials)=>{
++		console.log(credentials);
++		return utils.restHelper('POST',CONFIG.AUTHHOST,credentials);
++	}
++ 	
++
++	
++	return{
++		checkPermissions
++	}
++}
++export default Auth();
+\ No newline at end of file
