@@ -3,7 +3,7 @@ let Todo = require('./models/todo'),
     User = require('./models/user.js'),
     logger = require('koa-logger');
 
-const middlewares = {
+const authController = {
   getAll: function*() {
     this.body = yield Todo.find({});
   },
@@ -81,4 +81,4 @@ const middlewares = {
   }
 }
 
-module.exports = middlewares;
+module.exports = authController;
