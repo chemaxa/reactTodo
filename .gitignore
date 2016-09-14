@@ -38,6 +38,7 @@ Temporary Items
 
 # Node modules
 node_modules/*
-
+# VSCode
+.vscode/*
 #psd
 psd/*
