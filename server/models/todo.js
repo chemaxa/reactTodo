@@ -23,4 +23,8 @@ let todoSchema = new mongoose.Schema({
     required: true
   }
 });
-module.exports = mongoose.model('Todo', todoSchema);
+module.exports = {
+  model: mongoose.model('Todo', todoSchema),
+  schema: todoSchema
+}
+

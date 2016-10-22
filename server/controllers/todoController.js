@@ -1,5 +1,5 @@
 'use strict';
-let Todo = require('../models/todo.js'),
+let Todo = require('../models/todo.js').model,
     User = require('../models/user.js'),
     logger = require('koa-logger');
 
