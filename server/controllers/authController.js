@@ -1,9 +1,15 @@
 'use strict';
-let Todo = require('./models/todo'),
-    User = require('./models/user.js'),
+let Todo = require('../models/todo'),
+    User = require('../models/user.js'),
     logger = require('koa-logger');
 
 const authController = {
+  checkPermission: function*(){
+    console.log('Auth body: ',this.request.body);
+    this.body= {
+      'Auth': this.request.body
+    }
+  },
   getAll: function*() {
     this.body = yield Todo.find({});
   },

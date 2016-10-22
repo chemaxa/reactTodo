@@ -3,6 +3,7 @@ let
   
   router = require('koa-router')(),
   koaBody = require('koa-body')(),
+  authController = require('./controllers/authController'),
   todoController = require('./controllers/todoController');
 
 module.exports = function(app) {
@@ -24,7 +25,8 @@ module.exports = function(app) {
 
   // Clear completed todos
   router.post('/api/todos/clear', koaBody, todoController.clearCompleted);
-
+  //Auth route
+  router.post('/auth', koaBody, authController.checkPermission);
   // Redirect to main page from all routes
   router.redirect('/*', '/');
   app.use(router.routes());
