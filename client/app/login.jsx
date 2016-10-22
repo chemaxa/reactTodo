@@ -8,7 +8,6 @@ class Login extends Component{
 	}
 	componentDidMount(){
 		$('#loginModal').modal('show');
-		console.log($('#loginModal'))
 	}
 	onSubmit(e){
 		e.preventDefault();
@@ -23,7 +22,7 @@ class Login extends Component{
 	}
 	render(){
 		return(
-			<div className="modal fade" id="loginModal" tabindex="-1" role="dialog">
+			<div className="modal fade" id="loginModal" tabIndex="-1" role="dialog">
 			  <div className="modal-dialog" role="document">
 			    <div className="modal-content">
 			      <div className="modal-header">
@@ -33,11 +32,11 @@ class Login extends Component{
 			      <div className="modal-body">
 			        <form onSubmit={this.onSubmit} id="loginForm">
 							  <div className="form-group">
-							    <label for="email">Email address</label>
+							    <label htmlFor="email">Email address</label>
 							    <input type="email" id="email" className="form-control" placeholder="Email" required/>
 							  </div>
 							  <div className="form-group">
-							    <label for="password">Password</label>
+							    <label htmlFor="password">Password</label>
 							    <input type="password" id="password" className="form-control" placeholder="Password" required/>
 							  </div>
 							</form>
