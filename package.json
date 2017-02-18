@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "test",
-    "start-api": "nodemon server/server",
-    "start-dev": "node devserver"
+    "dev": "node devserver",
+    "build": "webpack -p --colors"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     "babel-preset-stage-2": "^6.5.0",
     "eslint": "^2.10.1",
     "eslint-plugin-react": "^5.1.1",
+    "nodemon": "^1.11.0",
     "react-hot-loader": "^1.3.0",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
