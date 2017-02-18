@@ -5,7 +5,7 @@ let webpack = require('webpack');
 module.exports = {
   devtool: 'eval',
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   entry: [
     'webpack-dev-server/client?http://localhost:1337',
@@ -24,7 +24,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot','babel'],
+        loaders: ['react-hot-loader','babel-loader'],
         exclude: /node_modules/,
         include: path.join(__dirname, '/client/app')
       }
