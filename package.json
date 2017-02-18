@@ -6,7 +6,7 @@
   "scripts": {
     "test": "test",
     "dev": "node devserver",
-    "build": "webpack -p --colors"
+    "build": "webpack -p --colors --devtool='nosources-source-map'"
   },
   "repository": {
     "type": "git",

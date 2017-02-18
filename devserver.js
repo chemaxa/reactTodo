@@ -5,11 +5,14 @@ var config = require('./webpack.config');
 var nodemon = require('nodemon');
 
 new WebpackDevServer(webpack(config), {
-  contentBase:'./client',
+  contentBase: './client',
   publicPath: config.output.publicPath,
   hot: true,
   inline: true,
-  historyApiFallback: true
+  historyApiFallback: true,
+  stats: {
+    colors: true
+  }
 }).listen(1337, 'localhost', function (err, result) {
   if (err) {
     return console.log(err);

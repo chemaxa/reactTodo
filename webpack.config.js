@@ -4,6 +4,9 @@ let webpack = require('webpack');
 
 module.exports = {
   devtool: 'eval',
+  stats: { 
+    colors: true
+  },
   resolve: {
     extensions: ['.js', '.jsx']
   },
